@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Creator - YouTube Channel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0010 50%, #0a1010 100%);
+            background-image: url('https://public.youware.com/users-website-assets/prod/70a9e3ee-e129-4c1e-b4e0-8bbc7a113723/bff0e103263e41a587d75597fd267d2b.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #fff;
+        }
+
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .profile-card {
+            background: rgba(20, 5, 15, 0.9);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 0, 0, 0.4);
+            border-radius: 20px;
+            padding: 40px;
+            width: 450px;
+            position: relative;
+            transform: perspective(1000px) rotateX(5deg) rotateY(-5deg);
+            transition: all 0.3s ease;
+            box-shadow:
+                0 20px 40px rgba(255, 0, 0, 0.3),
+                inset 0 0 20px rgba(255, 0, 0, 0.1);
+            animation: cardFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes cardFloat {
+
+            0%,
+            100% {
+                transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) translateY(0px);
+            }
+
+            50% {
+                transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) translateY(-10px);
+            }
+        }
+
+        .profile-card:hover {
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1.05);
+            border-color: rgba(255, 0, 0, 0.7);
+            box-shadow:
+                0 30px 60px rgba(255, 0, 0, 0.4),
+                inset 0 0 30px rgba(255, 0, 0, 0.2);
+        }
+
+        .circuit-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://public.youware.com/users-website-assets/prod/70a9e3ee-e129-4c1e-b4e0-8bbc7a113723/045df84f25744ae09970a3fe63381ec1.jpg');
+            background-size: cover;
+            opacity: 0.2;
+            border-radius: 18px;
+            mix-blend-mode: screen;
+        }
+
+        .youtube-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(45deg, #ff0000, #ff4444);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 3;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #ff0000, #ff4444, #ffaa00, #ff0000);
+            padding: 3px;
+            animation: avatarGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes avatarGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(255, 68, 68, 0.8);
+            }
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-image: url('https://public.youware.com/users-website-assets/prod/70a9e3ee-e129-4c1e-b4e0-8bbc7a113723/0dfa2987fda64597af7dae2a11bd40cf');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .play-button-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 0, 0, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: playPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes playPulse {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        .play-button-overlay::after {
+            content: '▶';
+            color: white;
+            font-size: 12px;
+            margin-left: 2px;
+        }
+
+        .hologram-effect {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            border-radius: 50%;
+            animation: holoScan 2s linear infinite;
+        }
+
+        @keyframes holoScan {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff0000, #ff4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .title {
+            font-size: 16px;
+            color: #ff4444;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item:hover {
+            background: rgba(255, 0, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .stat-item:hover::before {
+            left: 100%;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff4444;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #aaa;
+            text-transform: uppercase;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .contact-item {
+            margin: 10px 0;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #ff4444;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .social-link img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+        }
+
+        .social-tiktok,
+        .social-instagram {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .social-tiktok:hover {
+            background: rgba(255, 0, 80, 0.3);
+            border-color: rgba(255, 0, 80, 0.6);
+            box-shadow: 0 0 15px rgba(255, 0, 80, 0.6);
+        }
+
+        .social-instagram:hover {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            border-color: rgba(225, 48, 108, 0.6);
+            box-shadow: 0 0 15px rgba(225, 48, 108, 0.6);
+        }
+
+        .social-link:hover {
+            background: rgba(255, 0, 0, 0.4);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+        }
+
+        /* Platform-specific hover effects */
+        .social-link[title="YouTube"]:hover {
+            background: rgba(255, 0, 0, 0.4);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            color: #fff;
+        }
+
+        .social-link[title="TikTok"]:hover {
+            background: rgba(255, 0, 80, 0.4);
+            box-shadow: 0 0 15px rgba(255, 0, 80, 0.6);
+            color: #fff;
+        }
+
+        .social-link[title="Instagram"]:hover {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            box-shadow: 0 0 15px rgba(225, 48, 108, 0.6);
+            color: #fff;
+        }
+
+        .social-link[title="Facebook"]:hover {
+            background: rgba(24, 119, 242, 0.4);
+            box-shadow: 0 0 15px rgba(24, 119, 242, 0.6);
+            color: #fff;
+        }
+
+        .social-link[title="Twitter"]:hover {
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+            color: #fff;
+        }
+
+        .social-link[title="Discord"]:hover {
+            background: rgba(88, 101, 242, 0.4);
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.6);
+            color: #fff;
+        }
+
+        .data-stream {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: #ff4444;
+            opacity: 0.7;
+            line-height: 1.2;
+        }
+
+        .glitch {
+            position: relative;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+
+            0%,
+            90%,
+            100% {
+                transform: translate(0);
+            }
+
+            20% {
+                transform: translate(-1px, 1px);
+            }
+
+            40% {
+                transform: translate(-1px, -1px);
+            }
+
+            60% {
+                transform: translate(1px, 1px);
+            }
+
+            80% {
+                transform: translate(1px, -1px);
+            }
+        }
+
+        .cyber-button {
+            background: transparent;
+            border: 2px solid #ff0000;
+            color: #ff0000;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            margin: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-button:hover {
+            background: #ff0000;
+            color: #fff;
+            box-shadow: 0 0 20px #ff0000;
+        }
+
+        .cyber-button.subscribe {
+            background: linear-gradient(45deg, #ff0000, #ff4444);
+            color: white;
+            border-color: #ff0000;
+        }
+
+        .cyber-button.subscribe:hover {
+            background: linear-gradient(45deg, #cc0000, #ff0000);
+            box-shadow: 0 0 25px #ff0000;
+        }
+
+        .cyber-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .cyber-button:hover::before {
+            left: 100%;
+        }
+
+        .youtube-icon {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 20px;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+    </style>
+    <script src="https://lib.youware.com/youware-lib.1747145198.js" id="yourware-lib"></script>
+</head>
+
+<body>
+    <div class="cyber-grid"></div>
+
+    <div class="container">
+        <div class="profile-card">
+            <div class="circuit-overlay"></div>
+            <div class="youtube-badge">Creator</div>
+
+            <div class="data-stream">
+                [LIVE] Streaming active...<br>
+                [VIEWS] Trending #1<br>
+                [UPLOAD] New video ready<br>
+                [STATUS] Creating content
+            </div>
+
+            <div class="profile-header">
+                <div class="avatar-container">
+                    <div class="avatar"></div>
+                    <div class="play-button-overlay"></div>
+                    <div class="hologram-effect"></div>
+                </div>
+
+                <h1 class="name glitch">Creative Hands BD</h1>
+                <p class="title">YouTube Content Creator</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">104</div>
+                    <div class="stat-label">Subscribers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">44,937</div>
+                    <div class="stat-label">Total Views</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">10</div>
+                    <div class="stat-label">Videos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">4.8★</div>
+                    <div class="stat-label">Rating</div>
+                </div>
+            </div>
+
+            <div class="contact-info">
+                <div class="contact-item">📧 shakilahmed916sa@gmail.com</div>
+                <div class="contact-item">🌐 www.youtube.com/@creativehandsbd-24</div>
+                <div class="contact-item">📱 Business Inquiries Welcome</div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.youtube.com/@creativehandsbd-24" class="social-link" title="YouTube" target="_blank">▶</a>
+                <a href="#" class="social-link social-tiktok" title="TikTok">
+                    <img src="https://public.youware.com/users-website-assets/prod/70a9e3ee-e129-4c1e-b4e0-8bbc7a113723/7a57c552d29a46e687c1bedc8197b255.png"
+                        alt="TikTok">
+                </a>
+                <a href="#" class="social-link social-instagram" title="Instagram">
+                    <img src="https://public.youware.com/users-website-assets/prod/70a9e3ee-e129-4c1e-b4e0-8bbc7a113723/393bf18046e44fcdb615f7abde9f7e97.png"
+                        alt="Instagram">
+                </a>
+                <a href="#" class="social-link" title="Facebook">f</a>
+                <a href="#" class="social-link" title="Twitter">𝕏</a>
+                <a href="#" class="social-link" title="Discord">🎮</a>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="cyber-button subscribe">
+                    <span class="youtube-icon">🔔</span>Subscribe
+                </button>
+                <button class="cyber-button">Watch Latest</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.width = '2px';
+            particle.style.height = '2px';
+            particle.style.backgroundColor = '#ff0000';
+            particle.style.boxShadow = '0 0 6px #ff0000';
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.top = window.innerHeight + 'px';
+            particle.style.zIndex = '5';
+            particle.style.pointerEvents = 'none';
+
+            document.body.appendChild(particle);
+
+            let yPos = window.innerHeight;
+            const speed = 1 + Math.random() * 2;
+
+            function animateParticle() {
+                yPos -= speed;
+                particle.style.top = yPos + 'px';
+
+                if (yPos < -10) {
+                    document.body.removeChild(particle);
+                } else {
+                    requestAnimationFrame(animateParticle);
+                }
+            }
+
+            animateParticle();
+        }
+
+
+        setInterval(createParticle, 200);
+
+
+        document.addEventListener('mousemove', (e) => {
+            const card = document.querySelector('.profile-card');
+            const rect = card.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const rotateX = (e.clientY - centerY) / 10;
+            const rotateY = (centerX - e.clientX) / 10;
+
+            card.style.transform = `perspective(1000px) rotateX(${5 + rotateX}deg) rotateY(${-5 + rotateY}deg)`;
+        });
+
+
+        document.addEventListener('mouseleave', () => {
+            const card = document.querySelector('.profile-card');
+            card.style.transform = 'perspective(1000px) rotateX(5deg) rotateY(-5deg)';
+        });
+
+
+        const dataStreamTexts = [
+            '[UPLOAD] Processing video...',
+            '[ANALYTICS] Tracking views...',
+            '[LIVE] Stream starting...',
+            '[COMMENT] Engaging audience...',
+            '[TRENDING] Viral content...',
+            '[MONETIZE] Revenue growing...'
+        ];
+
+        let currentTextIndex = 0;
+        const dataStream = document.querySelector('.data-stream');
+
+        function updateDataStream() {
+            const lines = dataStream.innerHTML.split('<br>');
+            lines.shift();
+            lines.push(dataStreamTexts[currentTextIndex]);
+            dataStream.innerHTML = lines.join('<br>');
+            currentTextIndex = (currentTextIndex + 1) % dataStreamTexts.length;
+        }
+
+        setInterval(updateDataStream, 2000);
+
+
+        document.querySelectorAll('.cyber-button').forEach(button => {
+            button.addEventListener('click', function (e) {
+                const ripple = document.createElement('div');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.position = 'absolute';
+                ripple.style.background = 'rgba(255, 0, 0, 0.5)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.pointerEvents = 'none';
+
+                this.appendChild(ripple);
+
+
+                if (this.classList.contains('subscribe')) {
+                    this.innerHTML = '<span class="youtube-icon">✓</span>Subscribed!';
+                    setTimeout(() => {
+                        this.innerHTML = '<span class="youtube-icon">🔔</span>Subscribe';
+                    }, 2000);
+                }
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+
+        function animateCounter(element, target, duration = 2000) {
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString();
+            }, 16);
+        }
+
+
+        window.addEventListener('load', () => {
+            const statValues = document.querySelectorAll('.stat-value');
+            setTimeout(() => {
+
+                statValues[0].textContent = '0';
+                animateCounter(statValues[0], 104); // animate to 104 subscribers
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>
